@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-投稿の一覧表示
+<ul th:each="post:${postList}">
+    <li th:text="${post.getMemo()}">
+    </li>
+</ul>
 </body>
 </html>
