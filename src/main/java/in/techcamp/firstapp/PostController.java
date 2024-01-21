@@ -1,5 +1,6 @@
 package in.techcamp.firstapp;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller //そのクラスがコントローラーであることを伝えるアノテーション
+@RequiredArgsConstructor
 public class PostController {
+    private  final  PostRepository postRepository;
     @GetMapping("/hello")   //ブラウザで入力されたURLと実行されるメソッドを紐付けるためのアノテーション
     public String showHello(Model model){  //返り値が文字列（String）のメソッド、Modelオブジェクトの受け取り
         var sampleText = "サンプルテキスト";
@@ -17,11 +20,7 @@ public class PostController {
 
     @GetMapping
     public String showList(Model model) {
-        var postList = List.of(
-                new PostEntity(1, "投稿１"),
-                new PostEntity(2, "投稿２"),
-                new PostEntity(3, "投稿３")
-        );
+        var postList = postRepository.findAll();
         model.addAttribute("postList", postList);
         return "index";
     }
